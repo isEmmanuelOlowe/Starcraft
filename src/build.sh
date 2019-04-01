@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/bin/bash
 echo "Builing Project: alphacraft"
 
@@ -27,4 +26,3 @@ exe alphacraft/controllers/splash/
 exe alphacraft/controllers/display/
 exe alphacraft/engine/optimiser/
 exe alphacraft/engine/resources/
->>>>>>> f26301127eeee0e93ef947f31d799dec1538de7b
