@@ -243,7 +243,7 @@ public class Game {
         possibleBuild.add(dependence);
       }
     }
-    //enforeMaximums(possibleBuild);
+    enforeMaximums(possibleBuild);
     return possibleBuild;
   }
 
