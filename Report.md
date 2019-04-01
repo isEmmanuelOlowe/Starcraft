@@ -150,7 +150,7 @@ The program should display an error message as this amount (1000) of marines wou
 
 ###### Actual
 
-![](/cs/home/gs221/Documents/Semester-2/CS1006/Project-2/Starcraft/tests/Test-10.png)
+![](tests/Test-10.png)
 
 The program successfully displays an error message. 
 
@@ -166,7 +166,7 @@ The program should show use of orbital commands
 
 ###### Actual
 
-![](/cs/home/gs221/Documents/Semester-2/CS1006/Project-2/Starcraft/tests/Test-11.png)
+![](tests/Test-11.png)
 
 The program successfully upgrades command centers to orbital commands depending on completed barracks. 
 
