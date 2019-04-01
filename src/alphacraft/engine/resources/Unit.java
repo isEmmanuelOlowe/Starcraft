@@ -1,4 +1,7 @@
 package alphacraft.engine.resources;
+/**
+* Describes the behaviour of Units in StarCraft  II
+*/
 public class Unit extends Resource {
 
   private int supplyCost;
@@ -18,6 +21,11 @@ public class Unit extends Resource {
     this.supplyCost = supplyCost;
   }
 
+  /**
+  * Gets the supply cost of the unit
+  *
+  * @return the supply cost of the unit
+  */
   public int getSupplyCost() {
     return supplyCost;
   }

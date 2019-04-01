@@ -7,6 +7,9 @@ import alphacraft.engine.resources.*;
 //remove when done debugging
 import java.util.Scanner;
 
+/**
+* Generates attributes for Game and find a solution to optimal build
+*/
 public class AlphaFind {
 
   //from intial command center
@@ -18,6 +21,13 @@ public class AlphaFind {
   private ArrayList<GameElement> buildList = new ArrayList<GameElement>();
   private HashMap<GameElement, Integer> maxItem = new HashMap<GameElement, Integer>();
 
+  /**
+  *Creates a new AlphaFind object.
+  *
+  * @param buildingFor what the user is trying to build.
+  * @param upgrades the upgrades the user wishes to get
+
+  */
   public AlphaFind(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, int gameSecond) {
     getDependencies(buildingFor);
     addUpgradeDependence(upgrades);
@@ -35,12 +45,15 @@ public class AlphaFind {
     }
     gasCost -= 1500 * 8;
     mineralCost -= 2500 * 2;
+    int orbitalMax = 1;
     while (gasCost >= 0 || mineralCost >= 0) {
       gasCost -= 1500 * 8;
       mineralCost -= 2500 * 2;
       buildList.add(GameElement.COMMAND_CENTER);
       incrementMax(GameElement.COMMAND_CENTER);
+      orbitalMax++;
     }
+    maxItem.put(GameElement.ORBITAL_COMMAND, new Integer(orbitalMax));
   }
 
   private void setupMaxList() {
@@ -104,6 +117,8 @@ public class AlphaFind {
       supplyCost += unit.getSupplyCost() * quantity;
       gasCost += unit.getGasCost() * quantity;
       mineralCost += unit.getMineralCost() * quantity;
+      int buildingMax = (quantity / 2 == 0)? 1 : quantity / 2;
+      maxItem.put(unit.getDependencies()[0], new Integer((buildingMax)));
       GameElement[] dependencies = unit.getDependencies();
       for (int i = 0; i < quantity; i++) {
         buildList.add(element);

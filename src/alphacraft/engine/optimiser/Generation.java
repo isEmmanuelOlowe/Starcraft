@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.text.DecimalFormat;
 import java.lang.IllegalStateException;
-
+/**
+* Handles the optimals results and generated results
+*/
 public class Generation {
 
   private int maxRunTime;
@@ -18,6 +20,14 @@ public class Generation {
   private long buffer = System.currentTimeMillis();
   private int gameSecond;
 
+  /**
+  * Creates a nwe generation object which shall be responsible for these operations
+  *
+  * @param buildingFor what the user is trying to build
+  * @param upgrades upgrades user is trying to impletement
+  * @param optimal stores the output for the program
+  * @param gameSecond how many seconds must pass in the game for an action to take place
+  */
   public Generation(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, ListView<String> optimal, int gameSecond) {
     this.buildingFor = buildingFor;
     this.upgrades = upgrades;
@@ -36,14 +46,27 @@ public class Generation {
 
   }
 
+  /**
+  * Gets the limiting length for which an attempt for solution can run for
+  *
+  * @return the max run time of a game object
+  */
   public int maxRunTime() {
     return this.maxRunTime;
   }
 
+  /**
+  * Generates a new game object for use
+  *
+  * @return new game object
+  */
   public Game newGame(){
     return new Game();
   }
 
+  /**
+  * Determines if a new optimal has been found and determines if listview is avaliable to be accessed.
+  */
   public void newOptimal(ArrayList<GameElement> build) {
     if (build.size() < maxRunTime) {
       maxRunTime = build.size();
@@ -57,6 +80,9 @@ public class Generation {
     }
   }
 
+  /**
+  * Prints the solution to the list view if it is avaliable
+  */
   public void printOptimal() {
 
     try {

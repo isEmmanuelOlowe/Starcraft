@@ -11,6 +11,10 @@ import alphacraft.controllers.Controller;
 import alphacraft.engine.optimiser.Optimiser;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/**
+* Displayes the corresponding dispay view to user.
+*/
 public class DisplayController {
 
     @FXML
@@ -31,6 +35,12 @@ public class DisplayController {
     private Optimiser thread;
 
     @FXML
+
+    /**
+    * Stoping building for desired selection,
+    *
+    * @param event click event
+    */
     public void stopBuilding(ActionEvent event) {
       thread.interrupt();
       Controller controller = new Controller();
@@ -38,6 +48,13 @@ public class DisplayController {
       controller.changeToSplash();
     }
 
+    /**
+    * creates the display objects which will display the data
+    *
+    * @param build what units that are being built for
+    * @param upgrades upgrades user is building for
+    * @param gameSecond the number of seconds that will pass before action can be taken
+    */
     public void buildStage(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades, int gameSecond) {
 
       for (GameElement key: build.keySet()) {

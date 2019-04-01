@@ -54,7 +54,7 @@ public class Game {
     //adds Reactors addon to build list.
     dependenciesList.add(GameElement.SCV);
     dependenciesList.add(GameElement.STARPORT_REACTOR);
-    dependenciesList.add(GameElement.FACTORY_TECH_LAB);
+    dependenciesList.add(GameElement.FACTORY_REACTOR);
     dependenciesList.add(GameElement.BARRACKS_REACTOR);
     dependenciesList.add(GameElement.ORBITAL_COMMAND);
   }
@@ -180,6 +180,7 @@ public class Game {
             if (dependsOn.length > 1 && validAddon(dependsOn[1])) {
               if (building.hasTechLab()) {
                 building.setAvaliable(build.getBuildTime(), currentGameTime);
+                CommandCenter.takeWorker(build.getBuildTime(), currentGameTime);
               }
             }
             else {
@@ -255,6 +256,14 @@ public class Game {
           possibleBuild.remove(i);
         }
       }
+      else if (validAddon(build)) {
+        GameElement building = GameElement.valueOf(build.toString().split("_")[0]);
+        if (buildingMaxQuantity.containsKey(building) && buildingsQuantity.containsKey(building)) {
+          if (buildingMaxQuantity.get(building).equals(buildingsQuantity.get(building))) {
+            possibleBuild.remove(i);
+          }
+        }
+      }
     }
   }
 
@@ -270,7 +279,7 @@ public class Game {
         addons++;
       }
       if (building.getName() == attachTo) {
-        if (building.isAvaliable(currentGameTime) && !building.isAvaliable(currentGameTime)) {
+        if (building.isAvaliable(currentGameTime)) {
           avaliable = true;
         }
       }

@@ -11,6 +11,9 @@ import alphacraft.engine.resources.GameElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+* Handles the swtiching between views
+*/
 public class Controller {
 
   public static Stage stage;
@@ -24,6 +27,9 @@ public class Controller {
     stage = primaryStage;
   }
 
+  /**
+  * Returns the user to Splash screen
+  */
   public void changeToSplash() {
     try {
 
@@ -40,14 +46,20 @@ public class Controller {
     }
   }
 
+  /**
+  * Takes user to the display Screen
+  *
+  * @param build the build the user is tring to make
+  * @param upgrades the upgrades the user wants
+  * @param gameSecond the seconds which shall pass before game action
+  */
   public void changeToDisplay(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades , int gameSecond) {
     try {
 
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("display/Display.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("display/display.fxml"));
       Parent root = loader.load();
       DisplayController displayController = (DisplayController) loader.getController();
       displayController.buildStage(build, upgrades, gameSecond);
-      //splashController.buildStage();
       stage.setTitle("AlphaCraft");
       stage.setScene(new Scene(root));
       stage.show();

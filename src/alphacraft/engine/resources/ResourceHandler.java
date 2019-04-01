@@ -1,5 +1,8 @@
 package alphacraft.engine.resources;
 
+/**
+* Correlates GameElement to corresponding class.
+*/
 public class ResourceHandler {
 
   public static Resource getResource(GameElement name) {

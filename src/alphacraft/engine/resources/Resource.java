@@ -1,5 +1,8 @@
 package alphacraft.engine.resources;
 
+/**
+* Describes games reources.
+*/
 public class Resource {
 
   private GameElement name;
@@ -45,27 +48,30 @@ public class Resource {
     return mineralCost;
   }
 
+  /**
+  * The gas cost to build this resource
+  *
+  * @return the gas cost of the resource
+  */
   public int getGasCost() {
     return gasCost;
   }
 
+  /**
+  * The time take to build this resource
+  *
+  * @return the time it takes to build the resource
+  */
   public int getBuildTime() {
     return buildTime;
   }
 
+  /**
+  * Returns the items that are required to be built be for this resource can be built.
+  *
+  * @return the dependencies of resource
+  */
   public GameElement[] getDependencies() {
     return dependencies;
   }
-
-  // public void setAvaliable(String curentTime) {
-  //   avaliable += buildTime + currentTime;
-  // }
-  //
-  // public boolean isActive(int currentTime) {
-  //   boolean active = false;
-  //   if (currentTime >= avaliable) {
-  //     active = true;
-  //   }
-  //   return active;
-  // }
 }

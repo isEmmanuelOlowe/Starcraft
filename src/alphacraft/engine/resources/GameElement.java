@@ -1,5 +1,7 @@
 package alphacraft.engine.resources;
-
+/**
+* Identifies each game resource in StarCraft II.
+*/
 public enum  GameElement {
   WAIT,
   //BUILDINGS
