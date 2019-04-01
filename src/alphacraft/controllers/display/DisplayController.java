@@ -38,7 +38,7 @@ public class DisplayController {
       controller.changeToSplash();
     }
 
-    public void buildStage(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades) {
+    public void buildStage(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades, int gameSecond) {
 
       for (GameElement key: build.keySet()) {
         buildingFor.getItems().add(key.toString() + ": " + build.get(key).toString());
@@ -47,7 +47,7 @@ public class DisplayController {
       for (GameElement upgrade: upgrades) {
         buildingFor.getItems().add(upgrade.toString());
       }
-      thread = new Optimiser(build, upgrades, optimalBuild);
+      thread = new Optimiser(build, upgrades, optimalBuild, gameSecond);
       thread.start();
     }
 }

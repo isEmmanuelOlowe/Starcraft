@@ -324,6 +324,16 @@
                                     <ComboBox fx:id="shipArmor" prefWidth="150.0" />
                                  </children>
                               </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Second">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="gameSecond" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>

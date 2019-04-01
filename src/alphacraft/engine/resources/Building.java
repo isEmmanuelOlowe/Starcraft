@@ -59,8 +59,6 @@ public class Building extends Resource {
   public boolean isAvaliable(int currentTime) {
     if (avaliable <= currentTime) {
       if (reactorAvaliable < currentTime) {
-        System.out.println("NAME:" + this.getName());
-        System.out.println(true);
         return true;
       }
     }

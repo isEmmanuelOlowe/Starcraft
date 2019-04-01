@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import java.util.HashMap;
 import java.util.ArrayList;
-import alphacraft.engine.resources.GameElement;
+import alphacraft.engine.resources.*;
 import alphacraft.controllers.Controller;
 
 public class SplashController {
@@ -75,6 +75,9 @@ public class SplashController {
 
     @FXML
     private ComboBox<String> shipArmor;
+
+    @FXML
+    private ComboBox<String> gameSecond;
 
     @FXML
     private Button buildButton;
@@ -150,7 +153,7 @@ public class SplashController {
       textFields[6] = ghost;
       fieldName[6] = GameElement.GHOST;
       textFields[7] = siegeTank;
-      fieldName[8] = GameElement.SIEGE_TANK;
+      fieldName[7] = GameElement.SIEGE_TANK;
       textFields[8] = thor;
       fieldName[8] = GameElement.THOR;
       textFields[9] = raven;
@@ -165,6 +168,8 @@ public class SplashController {
     * Formats fields in program
     */
     public void buildStage(){
+      gameSecond.getItems().addAll("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+      gameSecond.getSelectionModel().select("1");
       createTextFieldArray();
       //ensures only text input is allowed
       formatTextField(textFields);
@@ -176,6 +181,7 @@ public class SplashController {
     @FXML
     public void buildGame(ActionEvent event) {
       HashMap<GameElement, Integer> buildingFor = new HashMap<GameElement, Integer>();
+      int selectedGameSecond = Integer.parseInt(gameSecond.getSelectionModel().getSelectedItem().toString());
       for (int i = 0; i < textFields.length; i++) {
         int value = parseInput(textFields[i]);
         if (value != 0) {
@@ -185,14 +191,21 @@ public class SplashController {
       }
 
       if (buildingFor.size() != 0) {
-        error.setVisible(false);
-        ArrayList<GameElement> upgrades = addComboxes();
-        //Optimiser(buildingFor, upgrades);
-        Controller controller = new Controller();
-        controller.changeToDisplay(buildingFor, upgrades);
+        if (!supplyCapCheck(buildingFor)) {
+          error.setVisible(true);
+          errorMessage.setText("The Supply cost exceeds game cap of 200");
+        }
+        else {
+          error.setVisible(false);
+          ArrayList<GameElement> upgrades = addComboxes();
+          Controller controller = new Controller();
+          controller.changeToDisplay(buildingFor, upgrades, selectedGameSecond);
+        }
       }
       else {
         error.setVisible(true);
+        errorMessage.setText("No Quantity for Unit Selected");
+
       }
     }
 
@@ -206,6 +219,22 @@ public class SplashController {
       }
       return upgrades;
     }
+
+    private boolean supplyCapCheck(HashMap<GameElement, Integer> buildingFor) {
+      final int maxSupply = 200;
+      int requiredSupply = 0;
+      for (GameElement e: buildingFor.keySet()) {
+        Unit unit = (Unit) ResourceHandler.getResource(e);
+        requiredSupply = unit.getSupplyCost() * buildingFor.get(e).intValue();
+      }
+      if (requiredSupply > 200){
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+
 
     private int parseInput(TextField textField) {
 

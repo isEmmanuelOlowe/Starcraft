@@ -18,14 +18,14 @@ public class AlphaFind {
   private ArrayList<GameElement> buildList = new ArrayList<GameElement>();
   private HashMap<GameElement, Integer> maxItem = new HashMap<GameElement, Integer>();
 
-  public AlphaFind(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades) {
+  public AlphaFind(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, int gameSecond) {
     getDependencies(buildingFor);
     addUpgradeDependence(upgrades);
     buildList.addAll(build);
     setupMaxList();
     getSupply();
     getBase();
-    Game.setup(buildingFor, upgrades, maxItem, buildList);
+    Game.setup(buildingFor, upgrades, maxItem, buildList, gameSecond);
   }
 
   private void getBase() {
@@ -68,15 +68,18 @@ public class AlphaFind {
       maxItem.put(element, new Integer(1));
     }
   }
+
   public void findSolution() {
     game = new Game();
     while(!game.complete()) {
       game.getMaterials();
       ArrayList<GameElement> choice = game.getPossibleActions();
       for (int i = 0; i < buildList.size(); i++) {
-        if (choice.contains(buildList.get(i))){
-          game.execute(buildList.get(i));
+        GameElement build = buildList.get(i);
+        if (choice.contains(build)) {
+          game.execute(build);
           buildList.remove(i);
+          break;
         }
         else {
           game.execute(GameElement.WAIT);

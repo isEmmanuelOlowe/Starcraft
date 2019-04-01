@@ -5,6 +5,7 @@ import alphacraft.engine.resources.GameElement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.text.DecimalFormat;
+import java.lang.IllegalStateException;
 
 public class Generation {
 
@@ -15,11 +16,13 @@ public class Generation {
   private DecimalFormat decimalFormat;
   private ArrayList<GameElement> currentFastest;
   private long buffer = System.currentTimeMillis();
+  private int gameSecond;
 
-  public Generation(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, ListView<String> optimal) {
+  public Generation(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, ListView<String> optimal, int gameSecond) {
     this.buildingFor = buildingFor;
     this.upgrades = upgrades;
     this.optimal = optimal;
+    this.gameSecond = gameSecond;
     this.decimalFormat = new DecimalFormat("00");
   }
 
@@ -27,7 +30,7 @@ public class Generation {
   * Determines the worse possible solution to find maximum time each generation has to find solution.
   */
   public void initialisation() {
-    AlphaFind alpha = new AlphaFind(buildingFor, upgrades);
+    AlphaFind alpha = new AlphaFind(buildingFor, upgrades, gameSecond);
     alpha.findSolution();
     newOptimal(alpha.foundSolution());
 
@@ -55,7 +58,7 @@ public class Generation {
   }
 
   public void printOptimal() {
-    
+
     try {
       optimal.getItems().clear();
       HashMap<GameElement, Integer> printMap = new HashMap<GameElement, Integer>();
@@ -65,7 +68,6 @@ public class Generation {
         int seconds = totalSeconds % 60;
         if (element != GameElement.WAIT) {
           if (printMap.containsKey(element)) {
-            System.out.println(minutes + ":"+ decimalFormat.format(seconds) +" " + element + ": Quantity " + (printMap.get(element).intValue() + 1));
             optimal.getItems().add(minutes + ":"+ decimalFormat.format(seconds) +" " + element + ": Quantity " + (printMap.get(element).intValue() + 1));
             printMap.put(element, new Integer(printMap.get(element).intValue() + 1));
           }
@@ -75,7 +77,7 @@ public class Generation {
 
           }
         }
-        totalSeconds++;
+        totalSeconds += gameSecond;
       }
     }
     catch (IllegalStateException e) {

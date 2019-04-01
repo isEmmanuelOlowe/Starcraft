@@ -40,13 +40,13 @@ public class Controller {
     }
   }
 
-  public void changeToDisplay(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades ) {
+  public void changeToDisplay(HashMap<GameElement, Integer> build, ArrayList<GameElement> upgrades , int gameSecond) {
     try {
 
       FXMLLoader loader = new FXMLLoader(getClass().getResource("display/Display.fxml"));
       Parent root = loader.load();
       DisplayController displayController = (DisplayController) loader.getController();
-      displayController.buildStage(build, upgrades);
+      displayController.buildStage(build, upgrades, gameSecond);
       //splashController.buildStage();
       stage.setTitle("AlphaCraft");
       stage.setScene(new Scene(root));

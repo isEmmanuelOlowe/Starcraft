@@ -13,13 +13,15 @@ public class Optimiser extends Thread {
   private ArrayList<GameElement> upgrades;
   private boolean run = true;
   private ListView<String> optimal;
+  private int gameSecond;
   /**
   * Variables which the Thread shall be able to manipulate
   */
-  public Optimiser(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, ListView<String> optimal) {
+  public Optimiser(HashMap<GameElement, Integer> buildingFor, ArrayList<GameElement> upgrades, ListView<String> optimal, int gameSecond) {
     this.buildingFor = buildingFor;
     this.upgrades = upgrades;
     this.optimal = optimal;
+    this.gameSecond = gameSecond;
 
   }
 
@@ -28,7 +30,7 @@ public class Optimiser extends Thread {
   */
   public void run() {
 
-    Generation generation = new Generation(buildingFor, upgrades, optimal);
+    Generation generation = new Generation(buildingFor, upgrades, optimal, gameSecond);
     Random randNum = new Random();
     generation.initialisation();
 
@@ -41,7 +43,9 @@ public class Optimiser extends Thread {
             int randomChoice = randNum.nextInt(actions.size());
             game.execute(actions.get(randomChoice));
           }
-          generation.newOptimal(game.log());
+          if (game.complete()) {
+            generation.newOptimal(game.log());
+          }
         }
   }
 

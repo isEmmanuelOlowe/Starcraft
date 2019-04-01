@@ -22,7 +22,7 @@ public class Game {
   //list of everything that has been built
   private ArrayList<GameElement> actions = new ArrayList<GameElement>();
   //determines how long it takes each command to execute per second
-  private int gameSecond = 1;
+  private static int gameSecond;
   private int currentGameTime = 0;
   private double currentGas = 0;
   private double currentMinerals = 50;
@@ -44,7 +44,8 @@ public class Game {
     }
     dependencies = new HashSet<GameElement>(dependenciesList);
   }
-  public static void setup(HashMap<GameElement, Integer> setUnitGoal, ArrayList<GameElement> setUpgradeGoal, HashMap<GameElement, Integer> setBuildingMaxQuantity, ArrayList<GameElement> buildList) {
+  public static void setup(HashMap<GameElement, Integer> setUnitGoal, ArrayList<GameElement> setUpgradeGoal, HashMap<GameElement, Integer> setBuildingMaxQuantity, ArrayList<GameElement> buildList, int setGameSecond) {
+    gameSecond = setGameSecond;
     cap = new Random();
     unitsGoal = setUnitGoal;
     upgradesGoal = new HashSet<GameElement>(setUpgradeGoal);
@@ -52,9 +53,10 @@ public class Game {
     dependenciesList = new HashSet<GameElement>(buildList);
     //adds Reactors addon to build list.
     dependenciesList.add(GameElement.SCV);
-    // dependencies.add(GameElement.STARPORT_REACTOR);
-    // dependencies.add(GameElement.FACTORY_TECH_LAB);
-    // dependencies.add(GameElement.BARRACKS_REACTOR);
+    dependenciesList.add(GameElement.STARPORT_REACTOR);
+    dependenciesList.add(GameElement.FACTORY_TECH_LAB);
+    dependenciesList.add(GameElement.BARRACKS_REACTOR);
+    dependenciesList.add(GameElement.ORBITAL_COMMAND);
   }
 
   public void build(Resource resource) {
@@ -90,9 +92,8 @@ public class Game {
       buildingsQuantity.put(building.getName(), new Integer(1));
     }
 
-    if (building.getName() == GameElement.COMMAND_CENTER) {
-      CommandCenter command = (CommandCenter) building;
-      command.init();
+    if (building.getName() == GameElement.COMMAND_CENTER && validCommand(building)) {
+
     }
     else if (building.getName() == GameElement.REFINERY) {
       CommandCenter.addRefinery();
@@ -109,8 +110,20 @@ public class Game {
     }
   }
 
+  private boolean validCommand(Resource building){
+    try {
+      CommandCenter command = (CommandCenter) building;
+      command.init();
+      return true;
+    }
+    catch (ClassCastException e) {
+      return false;
+    }
+  }
   public void addUnit(Resource resource) {
     Unit unit = (Unit) resource;
+    if (unit.getName() == GameElement.MARINE ) {
+    }
     if (unit.getName() == GameElement.SCV) {
       if (CommandCenter.numberOfWorker() > worker_cap) {
         dependencies.remove(GameElement.SCV);
@@ -118,13 +131,15 @@ public class Game {
       CommandCenter.addWorker();
     }
     else if (units.containsKey(unit.getName())) {
+      if (resource.getName() == GameElement.MARINE) {
+      }
       Integer amount = units.get(unit.getName());
       Integer goal = unitsGoal.get(unit.getName());
       currentSupply += unit.getSupplyCost();
+      units.put(unit.getName(), new Integer(amount.intValue() + 1));
       if (amount.equals(goal)) {
         dependencies.remove(unit.getName());
       }
-      units.put(unit.getName(), new Integer(amount.intValue() + 1));
     }
     else {
       units.put(unit.getName(), new Integer(1));
@@ -137,6 +152,7 @@ public class Game {
   }
 
   public void execute(GameElement action) {
+
     //buildings are built
     if (action != GameElement.WAIT) {
       Resource build = ResourceHandler.getResource(action);
@@ -147,7 +163,7 @@ public class Game {
         Addon addon = (Addon) ResourceHandler.getResource(action);
         GameElement buildTo = GameElement.valueOf(action.toString().split("_")[0]);
         for (Building building: buildings) {
-          if (building.getName() == buildTo && !building.hasAddon()) {
+          if (building.getName() == buildTo && !building.hasAddon() && building.isAvaliable(currentGameTime)) {
             building.addon(action);
             building.setAvaliable(addon.getBuildTime(), currentGameTime);
             build(build);
@@ -176,7 +192,7 @@ public class Game {
       }
     }
     actions.add(action);
-    currentGameTime += 1 * gameSecond;
+    currentGameTime +=  gameSecond;
   }
 
 
@@ -185,8 +201,7 @@ public class Game {
     CommandCenter.resetDemand();
     ArrayList<GameElement> possibleBuild = new ArrayList<GameElement>();
     possibleBuild.add(GameElement.WAIT);
-    for (GameElement dependence: dependencies) {
-      System.out.println(dependence);
+    for (GameElement dependence: dependenciesList) {
       Resource resource = ResourceHandler.getResource(dependence);
       CommandCenter.getCosts(resource);
       boolean isBuilding = (resource instanceof Building)? true: false;
@@ -228,7 +243,7 @@ public class Game {
         possibleBuild.add(dependence);
       }
     }
-    enforeMaximums(possibleBuild);
+    //enforeMaximums(possibleBuild);
     return possibleBuild;
   }
 
@@ -242,6 +257,7 @@ public class Game {
       }
     }
   }
+
   public boolean attachAvaliable(GameElement addon) {
     String add = addon.toString();
     String[] components = add.split("_");
@@ -254,7 +270,7 @@ public class Game {
         addons++;
       }
       if (building.getName() == attachTo) {
-        if (building.isAvaliable(currentGameTime)) {
+        if (building.isAvaliable(currentGameTime) && !building.isAvaliable(currentGameTime)) {
           avaliable = true;
         }
       }
@@ -288,7 +304,7 @@ public class Game {
     for (int i = 0; i < dependsOn.length; i++) {
       GameElement dependence = dependsOn[i];
       if (actions.contains(dependence)) {
-        if (i == 0 && !isBuilding) {
+        if (i == 0 && !(isBuilding && dependence == GameElement.COMMAND_CENTER)) {
           //checks that a building is avliable to build it
           boolean needLab = false;
           if (dependsOn.length > 1) {
@@ -338,12 +354,21 @@ public class Game {
       }
   }
 
+  public boolean upgradesEqual() {
+    boolean valid = true;
+    for(GameElement upgrade: upgradesGoal) {
+      if (!upgrades.contains(upgrade)) {
+        valid = false;
+      }
+    }
+    return valid;
+  }
   public boolean complete() {
     boolean completed = true;
-    if (!upgrades.equals(upgradesGoal)) {
+    if (!units.equals(unitsGoal)) {
       completed = false;
     }
-    else if (!units.equals(unitsGoal)) {
+    else if (!upgradesEqual()) {
       completed = false;
     }
     return completed;
