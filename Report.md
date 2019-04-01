@@ -278,7 +278,7 @@ The specification required that a simulator and build order optimiser be produce
 
 ## Conclusion 
 
-The specification was used successfully to produce a Starcraft II simulator and build optimiser. 
+The specification was used successfully to produce a Starcraft II simulator and build optimiser. The program had to support simulation of resource gathering for one base, and a variable number of workers, including three per mineral patch, simulation of building and unit construction, a basic search strategy and should output this build order to fullfill the basic deliverable. As well as the basic solution all extensions were implemented and a complex search strategy was used to create and optimise the build order showing that the program fullfills the Advanced Deliverable. 
 
 ##### Difficulties
 
