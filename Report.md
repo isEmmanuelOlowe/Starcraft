@@ -274,11 +274,11 @@ As expected the build time increases, giving allowing for a more realistic build
 
 ## Evaluation 
 
-The specification required that a simulator and build order optimiser be produced. It should simulate a Starcraft II game from a single players perspective and should produce ways in which a player can reach a specified game state. As shown from the testing above the program can successfully produce an optimised build order for both the 'Basic Goals' and 'Advanced Goals'. All extensions were also implemented. The program also makes use of a GUI to receive input from the user and output the build order. 
+The specification required that a simulator and build order optimiser be produced. It should simulate a Starcraft II game from a single players perspective and should produce ways in which a player can reach a specified game state. As shown from the testing above the program can successfully simulate resource gathering for one base and a variable number of workers, building and unit construction, contains a search strategy and outputs the build order. Thus fullfilling the basic deliverable. All extensions were implemented and a sophisticated search strategy was implemented as shown. From this it can be concluded that the program fullfills the Advanced Deliverable. 
 
 ## Conclusion 
 
-The specification was used successfully to produce a Starcraft II simulator and build optimiser. A genetic algorithm was used to continuously optimise the produced build order. 
+The specification was used successfully to produce a Starcraft II simulator and build optimiser. 
 
 ##### Difficulties
 
