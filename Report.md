@@ -238,6 +238,40 @@ The program should show use of orbital commands
 
 The program successfully upgrades command centers to orbital commands depending on completed barracks. 
 
+
+
+##### Test 16 - Upgrades
+
+This test was used to ensure that the selected upgrades were applied and shown on the outputted build order. 
+
+###### Expected
+
+The build order should contain an upgrade for infantry weapons. To test this I will select the upgrade 'Infantry Weapons 3' In this test I will build 50 Marines, 8 Helion and 4 Tanks. 
+
+###### Actual 
+
+![](tests/Test-16.png)
+
+The upgrade is successfully applied when appropriate. 
+
+
+
+##### Test 17 - Realistic Timing
+
+This test is used to ensure that the game time is successfully modified depending on the users selection.
+
+##### Expected
+
+When the 'game second' is increased so too should the total build time.
+
+##### Actual 
+
+![](tests/Test-17.png)
+
+As expected the build time increases, giving allowing for a more realistic build time to be selected if neccecary. 
+
+
+
 ## Evaluation 
 
 The specification required that a simulator and build order optimiser be produced. It should simulate a Starcraft II game from a single players perspective and should produce ways in which a player can reach a specified game state. As shown from the testing above the program can successfully produce an optimised build order for both the 'Basic Goals' and 'Advanced Goals'. All extensions were also implemented. The program also makes use of a GUI to receive input from the user and output the build order. 
