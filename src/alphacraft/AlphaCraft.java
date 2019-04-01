@@ -1,6 +1,7 @@
 package alphacraft;
 
-import alphacraft.controllers.splash.*;
+import alphacraft.controllers.splash.SplashController;
+import alphacraft.controllers.Controller;
 import javafx.application.Application;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -17,10 +18,9 @@ public class AlphaCraft extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("controllers/splash/splash.fxml"));
-    primaryStage.setTitle("Starcraft Engine");
-    primaryStage.setScene(new Scene(root, 1920, 1080));
-    primaryStage.show();
+    Controller controller = new Controller();
+    controller.setStage(primaryStage);
+    controller.changeToSplash();
   }
 
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +18,7 @@
    <top>
       <AnchorPane prefHeight="20.0" prefWidth="1280.0" style="-fx-background-color: #6c7a89;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="14.0" layoutY="-2.0" prefHeight="53.0" prefWidth="1263.0" text="Starcraft Engine" textFill="#f2f1ef" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="-2.0">
+            <Label layoutX="14.0" layoutY="-2.0" prefHeight="53.0" prefWidth="1263.0" text="AlphaCraft" textFill="#f2f1ef" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="-2.0">
                <font>
                   <Font name="Segoe UI Black" size="36.0" />
                </font>
@@ -28,66 +29,307 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
-               <children>
-                  <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Units/Marine.jpg" />
-                     </image>
-                  </ImageView>
-                  <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Marine">
+           <VBox fx:id="error" alignment="CENTER" prefHeight="52.0" prefWidth="1264.0" style="-fx-background-color: #cf000f;" visible="false">
+              <children>
+                  <Text fx:id="errorMessage" fill="#2e3131" strokeType="OUTSIDE" strokeWidth="0.0" text="No Quantity for Unit Selected" textAlignment="CENTER" wrappingWidth="1264.0">
                      <font>
-                        <Font name="Yu Gothic UI Semibold" size="36.0" />
+                        <Font name="Segoe UI Black" size="36.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="marine" promptText="0" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
-               <children>
-                  <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Units/Hellion.jpg" />
-                     </image>
-                  </ImageView>
-                  <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Hellion">
-                     <font>
-                        <Font name="Yu Gothic UI Semibold" size="36.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="hellion" promptText="0" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
-               <children>
-                  <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Units/Medivac.jpg" />
-                     </image>
-                  </ImageView>
-                  <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Medivac">
-                     <font>
-                        <Font name="Yu Gothic UI Semibold" size="36.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="medivac" promptText="0" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
-               <children>
-                  <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@img/Units/Viking.jpg" />
-                     </image>
-                  </ImageView>
-                  <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Viking">
-                     <font>
-                        <Font name="Yu Gothic UI Semibold" size="36.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="viking" promptText="0" />
-               </children>
-            </HBox>
+              </children>
+           </VBox>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="649.0" prefWidth="1280.0" style="-fx-background-color: #2e3131;">
+              <content>
+                <AnchorPane prefHeight="651.0" style="-fx-background-color: #2e3131;">
+                     <children>
+                        <VBox prefHeight="484.0" prefWidth="1280.0" spacing="10.0" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Units" textAlignment="CENTER" wrappingWidth="1261.671875">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="36.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Marine.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Marine">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="marine" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Hellion.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Hellion">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="hellion" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Medivac.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Medivac">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="medivac" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Viking.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Viking">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="viking" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Marauder.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Marauder">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="marauder" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Reaper.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Reaper">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="reaper" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Ghost.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Ghost">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="ghost" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Siege_Tank.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Siege Tank">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="siegeTank" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Thor.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Thor">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="thor" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Raven.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Raven">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="raven" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Banshee.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Banshee">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="banshee" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Units/Battlecruiser.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Battlecruiser">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="battlecruiser" promptText="0" />
+                                 </children>
+                              </HBox>
+                              <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Upgrades" textAlignment="CENTER" wrappingWidth="1261.671875">
+                                 <font>
+                                    <Font name="Segoe UI Black" size="36.0" />
+                                 </font>
+                              </Text>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Engineering_Bay.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Infantry Weapons">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="infantryWeapons" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Engineering_Bay.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Infantry Armor">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="infantryArmor" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Armory.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Weapons">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="vehicleWeapons" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Armory.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Vehicle Armor">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="vehicleArmor" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Armory.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Ship Weapons">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="shipWeapons" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1280.0" spacing="100.0">
+                                 <children>
+                                    <ImageView fitHeight="103.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/Buildings/Armory.jpeg" />
+                                       </image>
+                                    </ImageView>
+                                    <Text fill="#f2f1ef" strokeType="OUTSIDE" strokeWidth="0.0" text="Ship Armor">
+                                       <font>
+                                          <Font name="Yu Gothic UI Semibold" size="36.0" />
+                                       </font>
+                                    </Text>
+                                    <ComboBox fx:id="shipArmor" prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
          </children>
       </VBox>
    </center>
@@ -98,7 +340,4 @@
          </font>
       </Button>
    </bottom>
-   <right>
-      <ScrollBar orientation="VERTICAL" prefHeight="236.0" prefWidth="18.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>
