@@ -240,5 +240,13 @@ The specification required that a simulator and build order optimiser be produce
 
 ## Conclusion 
 
-The specification was used successfully to produce a Starcraft II simulator and build optimiser. A genetic algorithm was used successfully to continuously optimise the produced build order. 
+The specification was used successfully to produce a Starcraft II simulator and build optimiser. A genetic algorithm was used to continuously optimise the produced build order. 
+
+##### Difficulties
+
+
+
+##### With More Time
+
+-  More test cases could have been implemented to further prove that the program meets the specification. 
 
