@@ -6,6 +6,9 @@ import java.util.HashSet;
 import alphacraft.engine.resources.*;
 import java.util.Random;
 
+/**
+* Simulates a Game of StarCraft II
+*/
 public class Game {
 
   private static HashMap<GameElement, Integer> unitsGoal;
@@ -29,6 +32,9 @@ public class Game {
   //since initial command center has these attributes
   private int currentSupply = 10;
 
+  /**
+  * Creates a new game
+  */
   public Game() {
     CommandCenter.reset();
     OrbitalCommand.reset();
@@ -44,6 +50,15 @@ public class Game {
     }
     dependencies = new HashSet<GameElement>(dependenciesList);
   }
+  /**
+  * Initial Setup of the  Game class
+  *
+  * @param setUnitGoal the quantity of units that is trying to be built
+  * @param setUpgradeGoal the upgrades trying to be built
+  * @param setBuildingMaxQuantity the max number of a building which can be present
+  * @param buildList the items which are required to be buist
+  * @param setGameSecond the amount of time which needs to pass before a action takes place
+  */
   public static void setup(HashMap<GameElement, Integer> setUnitGoal, ArrayList<GameElement> setUpgradeGoal, HashMap<GameElement, Integer> setBuildingMaxQuantity, ArrayList<GameElement> buildList, int setGameSecond) {
     gameSecond = setGameSecond;
     cap = new Random();
@@ -59,7 +74,13 @@ public class Game {
     dependenciesList.add(GameElement.ORBITAL_COMMAND);
   }
 
-  public void build(Resource resource) {
+
+  /**
+  * Builds a resource which has been executed
+  *
+  * @param resource the resource intended to be built
+  */
+  private void build(Resource resource) {
 
     currentGas -= resource.getGasCost();
     currentMinerals -= resource.getMineralCost();
@@ -74,7 +95,12 @@ public class Game {
     }
   }
 
-  public void addBuilding(Resource resource) {
+  /**
+  * Ads a build to the list of built items
+  *
+  * @param resource the building being built
+  */
+  private void addBuilding(Resource resource) {
     Building building = (Building) resource;
     buildings.add(building);
     int buildTime = building.getBuildTime();
@@ -110,6 +136,11 @@ public class Game {
     }
   }
 
+  /**
+  * Determiens if a object is a valid command center
+  *
+  * @return true if it is
+  */
   private boolean validCommand(Resource building){
     try {
       CommandCenter command = (CommandCenter) building;
@@ -120,7 +151,14 @@ public class Game {
       return false;
     }
   }
-  public void addUnit(Resource resource) {
+
+
+  /**
+  * Builds a unit that has been executed
+  *
+  * @param resource the unit being built
+  */
+  private void addUnit(Resource resource) {
     Unit unit = (Unit) resource;
     if (unit.getName() == GameElement.MARINE ) {
     }
@@ -146,11 +184,21 @@ public class Game {
     }
   }
 
+  /**
+  * Builds an upgrade that has been executed
+  *
+  * @param resource the upgrade being built
+  */
   public void addUpgrade(Resource resource) {
     dependencies.remove(resource.getName());
     upgrades.add(resource.getName());
   }
 
+  /**
+  * Executes an action
+  *
+  * @param action being executed
+  */
   public void execute(GameElement action) {
 
     //buildings are built
@@ -197,7 +245,11 @@ public class Game {
   }
 
 
-  //consider using breaks to save time
+  /**
+  * gets the actions that can be executed to move towards goal
+  *
+  * @return list of elements which can be built
+  */
   public ArrayList<GameElement> getPossibleActions() {
     CommandCenter.resetDemand();
     ArrayList<GameElement> possibleBuild = new ArrayList<GameElement>();
@@ -248,7 +300,12 @@ public class Game {
     return possibleBuild;
   }
 
-  public void enforeMaximums(ArrayList<GameElement> possibleBuild) {
+  /**
+  * Ensures buildings dont exceed max quantity
+  *
+  * @@param possibleBuild the list of items which can be built
+  */
+  private void enforeMaximums(ArrayList<GameElement> possibleBuild) {
     for (int i = 0; i < possibleBuild.size(); i++) {
       GameElement build = possibleBuild.get(i);
       if (buildingMaxQuantity.containsKey(build) && buildingsQuantity.containsKey(build)) {
@@ -267,6 +324,11 @@ public class Game {
     }
   }
 
+  /**
+  * determines is there a bulding compatible with an addon
+  *
+  * @param addon the addon being add to being
+  */
   public boolean attachAvaliable(GameElement addon) {
     String add = addon.toString();
     String[] components = add.split("_");
@@ -307,8 +369,13 @@ public class Game {
   }
 
 
-  //consider using breaks to save time
-  public boolean containsDependencies(GameElement[] dependsOn, boolean isBuilding) {
+  /**
+  * determines it the game player current has all the dependencies required to build an item
+  *
+  * @param dependsOn the depends being searches
+  * @param isBuilding whether or not the building is a resource
+  */
+  private boolean containsDependencies(GameElement[] dependsOn, boolean isBuilding) {
     boolean valid = true;
     for (int i = 0; i < dependsOn.length; i++) {
       GameElement dependence = dependsOn[i];
@@ -332,7 +399,13 @@ public class Game {
     return valid;
   }
 
-  public boolean avaliableBuiling(GameElement dependence, boolean needsLab) {
+  /**
+  * Depends if a building is able to build a unit
+  *
+  * @param dependence the building that needs to build
+  * @param needsLab whether or not the building being built needs a lab
+  */
+  private boolean avaliableBuiling(GameElement dependence, boolean needsLab) {
     boolean avaliable = false;
     for (Building building: buildings) {
       if (building.getName() == dependence) {
@@ -351,6 +424,9 @@ public class Game {
     return avaliable;
   }
 
+  /**
+  * Gets the minrals which have been generated in teh last game second;
+  */
   public void getMaterials() {
       //keep in mind gameSecond
       for (int i = 0; i < gameSecond; i++) {
@@ -363,7 +439,13 @@ public class Game {
       }
   }
 
-  public boolean upgradesEqual() {
+
+  /**
+  * Depends if the upgrades goal have been fulfilled
+  *
+  * @return true if upgrade goals have been fullfilled
+  */
+  private boolean upgradesEqual() {
     boolean valid = true;
     for(GameElement upgrade: upgradesGoal) {
       if (!upgrades.contains(upgrade)) {
@@ -372,6 +454,12 @@ public class Game {
     }
     return valid;
   }
+
+  /**
+  * Depends if the game has build the desired outcome
+  *
+  * @return true if goals have been built
+  */
   public boolean complete() {
     boolean completed = true;
     if (!units.equals(unitsGoal)) {
@@ -383,10 +471,20 @@ public class Game {
     return completed;
   }
 
+  /**
+  * the length the game has gone on for
+  *
+  * @return the length of the game so far
+  */
   public int gameLength() {
-    return currentGameTime;
+    return actions.size();
   }
 
+  /**
+  * Returns list of actions game to to move towards goal
+  *
+  * @returns log of gamelement actions which we executed every game second
+  */
   public ArrayList<GameElement> log() {
     return actions;
   }

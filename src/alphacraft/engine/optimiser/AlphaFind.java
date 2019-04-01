@@ -38,6 +38,9 @@ public class AlphaFind {
     Game.setup(buildingFor, upgrades, maxItem, buildList, gameSecond);
   }
 
+  /**
+  * gets the required number of bases and caps the number of OrbitalCommands
+  */
   private void getBase() {
     int refinery =  (gasCost / 1500) + 1;
     for (int i = 0; i < refinery; i++) {
@@ -56,6 +59,9 @@ public class AlphaFind {
     maxItem.put(GameElement.ORBITAL_COMMAND, new Integer(orbitalMax));
   }
 
+  /**
+  * Sets maxUp occurences for items.
+  */
   private void setupMaxList() {
     int permanentUpgrade = 1;
     HashMap<GameElement, Integer> maxItem = new HashMap<GameElement, Integer>();
@@ -71,6 +77,11 @@ public class AlphaFind {
     }
   }
 
+  /**
+  * increase the maximum amount of an item that can occur
+  *
+  * @param GameElement the item
+  */
   private void incrementMax(GameElement element) {
     if (maxItem.containsKey(element)) {
       int currentValue = maxItem.get(element);
@@ -82,6 +93,9 @@ public class AlphaFind {
     }
   }
 
+  /**
+  * Finds a solutions to compare length
+  */
   public void findSolution() {
     game = new Game();
     while(!game.complete()) {
@@ -101,6 +115,9 @@ public class AlphaFind {
     }
   }
 
+  /**
+  * gets the suply items need to meet supply criteria
+  */
   private void getSupply() {
     int supplyDepotSupplyProvided = 8;
     while (supplyCost > 0) {
@@ -109,6 +126,12 @@ public class AlphaFind {
       incrementMax(GameElement.SUPPLY_DEPOT);
     }
   }
+
+  /**
+  * Gets all the dependencies of the units being built
+  *
+  * @param buildingFor the units being built
+  */
   private void getDependencies(HashMap<GameElement, Integer> buildingFor) {
 
     for (GameElement element: buildingFor.keySet()) {
@@ -127,18 +150,33 @@ public class AlphaFind {
     }
   }
 
+  /**
+  * Gets all the upgrades which are required to be built and adds their dependencies
+  *
+  * @param upgrades the upgrades wanted
+  */
   private void addUpgradeDependence(ArrayList<GameElement> upgrades) {
     for (GameElement upgrade: upgrades) {
       addDependence(upgrade);
     }
   }
 
+  /**
+  * gets a dependances dependancies
+  *
+  * @param items list of dependances
+  */
   private void addBuildDependence(GameElement[] items) {
     for (GameElement item: items) {
       addDependence(item);
     }
   }
 
+  /**
+  * adds an item to the list of items to be built
+  *
+  * @param item
+  */
   private void addDependence(GameElement item) {
     incrementMax(item);
     if (!build.contains(item)) {
@@ -154,6 +192,11 @@ public class AlphaFind {
     }
   }
 
+  /**
+  * The log of the solution found
+  *
+  * @param log containing actions
+  */
   public ArrayList<GameElement> foundSolution() {
     return game.log();
   }

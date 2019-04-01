@@ -83,7 +83,7 @@ public class Generation {
   /**
   * Prints the solution to the list view if it is avaliable
   */
-  public void printOptimal() {
+  private void printOptimal() {
 
     try {
       optimal.getItems().clear();
