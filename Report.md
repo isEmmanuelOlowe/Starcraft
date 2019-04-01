@@ -236,11 +236,11 @@ The program should output an optimal build order that shows how 16 Marines, 4 Ba
 
 ## Evaluation 
 
-The specification required that a simulator and build order optimiser be produced. It should simulate a Starcraft II game from a single players perspective and should produce ways in which a player can reach a specified game state. As shown from the testing above the program can successfully produce an optimised build order for both the 'Basic Goals' and 'Advanced Goals'. All extensions were also implemented. The program also makes use of a GUI to receive input from the user and output the build order. 
+The specification required that a simulator and build order optimiser be produced. It should simulate a Starcraft II game from a single players perspective and should produce ways in which a player can reach a specified game state. As shown from the testing above the program can successfully produce an optimised build order for both the 'Basic Goals' and 'Advanced Goals'. All extensions were implemented. The program also makes use of a GUI to receive input from the user and output the build order. 
 
 ## Conclusion 
 
-The specification was used successfully to produce a Starcraft II simulator and build optimiser. A genetic algorithm was used to continuously optimise the produced build order. 
+The specification was used successfully to produce a Starcraft II simulator and build optimiser. This mainly involved implementing a genetic algorithm to continuously optimise the produced build order. 
 
 ##### Difficulties
 
