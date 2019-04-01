@@ -218,7 +218,7 @@ The program should display an error message as this amount (1000) of marines wou
 
 ###### Actual
 
-![](/cs/home/gs221/Documents/Semester-2/CS1006/Project-2/Starcraft/tests/Test-14.png)
+![](tests/Test-14.png)
 
 The program successfully displays an error message. 
 
